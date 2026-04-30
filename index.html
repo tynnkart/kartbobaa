@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kart Fashion & Boba | Dashboard</title>
+    <style>
+        /* TEMA: CAPPUCCINO, HITAM & PUTIH */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-color: #E3D5CA; /* Latar Cappuccino */
+            color: #2D241E; 
+        }
+
+        /* HEADER */
+        header {
+            background: #000; color: #fff; padding: 15px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-size: 20px; font-weight: 800; letter-spacing: 2px; }
+        .cart-status { background: #fff; color: #000; padding: 8px 15px; border-radius: 20px; font-weight: bold; }
+
+        /* BANNER SLIDER (Gambar Lokal) */
+        .slider-container {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            background: #D2B48C; /* Warna cadangan jika gambar belum ada */
+        }
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: slideAnimation 12s infinite;
+        }
+        .slides img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes slideAnimation {
+            0% { transform: translateX(0%); }
+            30% { transform: translateX(0%); }
+            33% { transform: translateX(-100%); }
+            63% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            96% { transform: translateX(-200%); }
+            100% { transform: translateX(0%); }
+        }
+
+        /* CONTAINER UTAMA */
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .section-title { 
+            font-size: 22px; margin-bottom: 30px; padding-bottom: 10px; 
+            border-bottom: 3px solid #000; display: inline-block;
+        }
+
+        /* PRODUK GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; }
+        .card { 
+            background: #fff; border-radius: 15px; overflow: hidden; 
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: translateY(-8px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-info { padding: 15px; text-align: center; }
+        .price { font-weight: 700; color: #8E735B; margin-bottom: 10px; }
+        .btn-add { 
+            background: #000; color: #fff; border: none; padding: 10px; 
+            width: 100%; cursor: pointer; border-radius: 8px; font-weight: 600;
+        }
+
+        /* CHECKOUT */
+        .checkout-container { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; margin-top: 30px; }
+        .box { background: #fff; padding: 25px; border-radius: 15px; }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .btn-hapus { background: #000; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+
+        /* PAYMENT */
+        .method-list { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 20px 0; }
+        .method-item { 
+            text-align: center; padding: 12px; border: 2px solid #E3D5CA; 
+            border-radius: 10px; cursor: pointer; font-weight: bold;
+        }
+        .method-item.active { background: #000; color: #fff; border-color: #000; }
+        .btn-pay { background: #000; color: #fff; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; }
+
+        /* STRUK */
+        #struk-area { display: none; }
+        @media print {
+            body * { visibility: hidden; }
+            #struk-area, #struk-area * { visibility: visible; }
+            #struk-area { display: block; position: absolute; left: 0; top: 0; width: 100%; padding: 30px; font-family: monospace; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">KART FASHION & BOBA</div>
+    <div class="cart-status">CART: <span id="cart-count">0</span></div>
+</header>
+
+<div class="slider-container">
+    <div class="slides">
+        <img src="boba.jpg" alt="Banner 1">
+        <img src="boba2.jpg" alt="Banner 2">
+        <img src="boba3.jpg" alt="Banner 3">
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="section-title">Menu Boba</h2>
+    <div class="grid">
+        <div class="card">
+            <img src="permen.jpg" alt="Bubblegum">
+            <div class="card-info">
+                <h4>Bubblegum Blue</h4>
+                <p class="price">Rp 22.000</p>
+                <button class="btn-add" onclick="tambahItem('Bubblegum Blue', 22000)">Tambah</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="taro.jpg" alt="Taro">
+            <div class="card-info">
+                <h4>Creamy Taro</h4>
+                <p class="price">Rp 24.000</p>
+                <button class="btn-add" onclick="tambahItem('Creamy Taro', 24000)">Tambah</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="coklat.jpg" alt="Cokelat">
+            <div class="card-info">
+                <h4>Dark Chocolate</h4>
+                <p class="price">Rp 25.000</p>
+                <button class="btn-add" onclick="tambahItem('Dark Chocolate', 25000)">Tambah</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="capucino.jpg" alt="Capucinno">
+            <div class="card-info">
+                <h4>Classic Capucinno</h4>
+                <p class="price">Rp 26.000</p>
+                <button class="btn-add" onclick="tambahItem('Classic Capucinno', 26000)">Tambah</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="red.jpg" alt="Red Velvet">
+            <div class="card-info">
+                <h4>Red Velvet Cake</h4>
+                <p class="price">Rp 27.000</p>
+                <button class="btn-add" onclick="tambahItem('Red Velvet Cake', 27000)">Tambah</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-container">
+        <div class="box">
+            <h3>🛒 Keranjang</h3>
+            <div id="cart-list"><p>Kosong...</p></div>
+        </div>
+        <div class="box">
+            <h3>💳 Checkout</h3>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin: 15px 0;">
+                <span>Total</span><span>Rp <span id="total-tagihan">0</span></span>
+            </div>
+            <div class="method-list">
+                <div class="method-item" onclick="pilihMetode(this, 'QRIS')">QRIS</div>
+                <div class="method-item" onclick="pilihMetode(this, 'DANA')">DANA</div>
+                <div class="method-item" onclick="pilihMetode(this, 'CASH')">CASH</div>
+            </div>
+            <button class="btn-pay" onclick="selesaikanPembayaran()">PROSES BAYAR</button>
+        </div>
+    </div>
+</div>
+
+<div id="struk-area">
+    <center>
+        <h2>KART FASHION & BOBA</h2>
+        <p>-------------------------</p>
+    </center>
+    <div id="struk-items"></div>
+    <p>-------------------------</p>
+    <p>TOTAL  : Rp <span id="struk-total"></span></p>
+    <p>METODE : <span id="struk-metode"></span></p>
+    <p>WAKTU  : <span id="struk-tgl"></span></p>
+    <center><p>Terima Kasih!</p></center>
+</div>
+
+<script>
+    let keranjang = [];
+    let metodeTerpilih = "";
+
+    function tambahItem(nama, harga) {
+        keranjang.push({ nama, harga });
+        updateKeranjang();
+    }
+
+    function hapusItem(index) {
+        keranjang.splice(index, 1);
+        updateKeranjang();
+    }
+
+    function updateKeranjang() {
+        const list = document.getElementById('cart-list');
+        const totalHtml = document.getElementById('total-tagihan');
+        const countHtml = document.getElementById('cart-count');
+        list.innerHTML = keranjang.length === 0 ? "<p>Kosong...</p>" : "";
+        let total = 0;
+        keranjang.forEach((item, index) => {
+            total += item.harga;
+            list.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.nama}</span>
+                    <button class="btn-hapus" onclick="hapusItem(${index})">Hapus</button>
+                </div>`;
+        });
+        totalHtml.innerText = total.toLocaleString();
+        countHtml.innerText = keranjang.length;
+    }
+
+    function pilihMetode(elemen, metode) {
+        document.querySelectorAll('.method-item').forEach(m => m.classList.remove('active'));
+        elemen.classList.add('active');
+        metodeTerpilih = metode;
+    }
+
+    function selesaikanPembayaran() {
+        if (!keranjang.length || !metodeTerpilih) return alert("Lengkapi pesanan & metode bayar!");
+        const strukItems = document.getElementById('struk-items');
+        let total = 0;
+        strukItems.innerHTML = "";
+        keranjang.forEach(item => {
+            total += item.harga;
+            strukItems.innerHTML += `<p>${item.nama} - Rp ${item.harga.toLocaleString()}</p>`;
+        });
+        document.getElementById('struk-total').innerText = total.toLocaleString();
+        document.getElementById('struk-metode').innerText = metodeTerpilih;
+        document.getElementById('struk-tgl').innerText = new Date().toLocaleString();
+        window.print();
+        keranjang = []; updateKeranjang();
+    }
+</script>
+</body>
+</html>
